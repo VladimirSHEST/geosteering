@@ -12,6 +12,78 @@
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <allure.version>2.24.0</allure.version>
+        <aspectj.version>1.9.20</aspectj.version>
     </properties>
+
+    <dependencies>
+        <!-- https://mvnrepository.com/artifact/com.codeborne/selenide -->
+        <dependency>
+            <groupId>com.codeborne</groupId>
+            <artifactId>selenide</artifactId>
+            <version>7.9.2</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>5.11.4</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-junit5</artifactId>
+            <version>${allure.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/io.qameta.allure/allure-selenide -->
+        <dependency>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-selenide</artifactId>
+            <version>${allure.version}</version>
+        </dependency>
+
+    </dependencies>
+
+        <build>
+            <plugins>
+                <!-- Единый экземпляр maven-surefire-plugin -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>3.2.5</version>
+                    <configuration>
+                        <testFailureIgnore>true</testFailureIgnore>
+                        <includes>
+                            <include>**/*Test.java</include>
+                            <include>**/*Tests.java</include>
+                        </includes>
+                        <argLine>
+                            -Dfile.encoding=UTF-8
+                            -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
+                        </argLine>
+                        <systemPropertyVariables>
+                            <allure.results.directory>${project.build.directory}/allure-results</allure.results.directory>
+                            <junit.jupiter.extensions.autodetection.enabled>true</junit.jupiter.extensions.autodetection.enabled>
+                        </systemPropertyVariables>
+                    </configuration>
+                </plugin>
+
+                <!-- Плагин для генерации Allure-отчётов -->
+                <plugin>
+                    <groupId>io.qameta.allure</groupId>
+                    <artifactId>allure-maven</artifactId>
+                    <version>2.12.0</version>
+                    <configuration>
+                        <reportVersion>${allure.version}</reportVersion>
+                        <resultsDirectory>${project.build.directory}/allure-results</resultsDirectory>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </build>
+
 
 </project>
