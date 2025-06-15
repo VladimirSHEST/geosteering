@@ -9,7 +9,7 @@ import static ru.geosteering.repository.PageRepository.mainPage;
 public class NavigationMenuTest {
 
     @Test
-    @DisplayName("Переход на страницу GEOSTEERING OFFICE из меню навигации")
+    @DisplayName("Переход на страницу GEOSTEERING OFFICE из меню навигации на главной странице")
     public void userCanNavigateToGeosteeringOfficePage() {
         step("Открываем главную страницу сайта", () -> {
             open(mainPage.url());
@@ -24,7 +24,7 @@ public class NavigationMenuTest {
     }
 
     @Test
-    @DisplayName("Переход на страницу GEOSTEERING OFFICE из меню навигации")
+    @DisplayName("Переход на страницу 'Контакты' из меню навигации на главной странице")
     public void userCanNavigateToContactsPage() {
         step("Открываем главную страницу сайта", () -> {
             open(mainPage.url());
